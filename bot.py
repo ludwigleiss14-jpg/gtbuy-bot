@@ -3,7 +3,6 @@ from flask import Flask
 import discord
 from threading import Thread
 
-# 1. Mini-Webserver für Render (damit der Port belegt wird)
 app = Flask('')
 
 @app.route('/')
@@ -18,7 +17,6 @@ def keep_alive():
     t.daemon = True
     t.start()
 
-# 2. Discord Bot Setup
 intents = discord.Intents.default()
 intents.message_content = True
 
@@ -50,7 +48,6 @@ class MyClient(discord.Client):
 
 client = MyClient(intents=intents)
 
-# 3. Starten
 if __name__ == "__main__":
     keep_alive()
     token = os.getenv("DISCORD_TOKEN")

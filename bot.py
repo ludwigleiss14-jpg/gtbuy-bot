@@ -39,7 +39,7 @@ async def on_message(message):
         
         embed = discord.Embed(
             title=f"Suchergebnisse für: {query}",
-            description=খার Finde die besten Angebote direkt bei GTBuy!",
+         description="Finde die besten Angebote direkt bei GTBuy!",
             color=0x00ff00
         )
         embed.add_field(name="Dein Affiliate-Link", value=f"[Hier klicken]({gtbuy_url})", inline=False)

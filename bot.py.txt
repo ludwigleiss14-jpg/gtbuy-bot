@@ -1,0 +1,37 @@
+import discord
+
+intents = discord.Intents.default()
+intents.message_content = True
+intents.guilds = True
+
+client = discord.Client(intents=intents)
+
+@client.event
+async def on_ready():
+    print(f"Bot ist eingeloggt als {client.user}")
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    if client.user.mentioned_in(message):
+        content = message.content.replace(f"<@{client.user.id}>", "").strip()
+        
+        if not content:
+            await message.channel.send("Schreibe einfach den Namen des Produkts hinter den Ping!")
+            return
+
+        embed = discord.Embed(
+            title=f"Suchergebnis für: {content}",
+            description="Hier ist dein Produkt direkt aus der Datenbank!",
+            color=0xFF5733
+        )
+        embed.add_field(name="Gutschein-Tipp", value="Verwende Code **0UL1P0M5K** für 2x 40% & 2x 30% Rabatt beim Versand!", inline=False)
+        embed.add_field(name="Direkt-Link", value=f"[Produkt ansehen](https://www.gtbuy.com/search?q={content}&ref=0UL1P0M5K)", inline=False)
+        
+        await message.channel.send(embed=embed)
+
+import os
+# Der Token wird nun sicher aus den Render-Einstellung geladen
+client.run(os.getenv("DISCORD_TOKEN"))
